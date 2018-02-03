@@ -1,20 +1,13 @@
 import mysql.connector as sql
+from mysql.connector import errorcode
 # pip install mysql-connector-python
 import pandas as pd
 
 from Util import Util
-
-host = Util.getConfig('mysql_host')
-database = Util.getConfig('staging_schema')
-username = Util.getConfig('username')
-password = Util.getConfig('password')
-
-db_connection = sql.connect(host=host, database=database,
-                            user=username, password=password)
-df = pd.read_sql('SELECT * FROM dw_workshop5.customer1', con=db_connection)
-print(df)
+import tables
 
 
+"""Seems that the SQL files can finish everything... just run the sql scripts."""
 
 
 
