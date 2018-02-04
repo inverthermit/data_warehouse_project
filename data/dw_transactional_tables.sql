@@ -30,15 +30,21 @@ CREATE TABLE dw_transactional.ProductPriceList
 )
 ;
 
+CREATE TABLE dw_transactional.Customer_Code_Unique
+(
+ CustCode VARCHAR(100) primary key 
+)
+;
+
 
 CREATE TABLE dw_transactional.Customer
 (
-  CustCode VARCHAR(100)
+ CustCode VARCHAR(100)
 , Name VARCHAR(100)
 , Postcode DECIMAL(65)
 , `Date of Birth` VARCHAR(100)
 , Validuntil VARCHAR(100)
-, primary key(CustCode, Name, Postcode, `Date of Birth`)
+, foreign key(CustCode) references dw_transactional.Customer_Code_Unique(CustCode)
 )
 ;
 
@@ -54,12 +60,13 @@ CREATE TABLE dw_transactional.Store
 
 CREATE TABLE dw_transactional.Sale
 (
-  SaleID VARCHAR(100) primary key
+  SaleID VARCHAR(100) 
 , Cust_Key VARCHAR(100) 
 , StoreID DOUBLE
 , Date DATETIME
-, foreign key(Cust_Key) references dw_transactional.Customer(CustCode)
+, primary key (SaleID,Cust_Key)
 , foreign key(StoreID) references dw_transactional.Store(StoreID)
+, foreign key(Cust_Key) references dw_transactional.Customer_Code_Unique(CustCode) 
 )
 ;
 

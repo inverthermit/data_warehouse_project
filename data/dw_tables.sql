@@ -12,7 +12,7 @@ index index_Customer_Postcode (Postcode));
 CREATE TABLE dw_final.Time_Dimension
 (
   Time_Id int primary key
-, Date varchar(50)
+, Date DATE
 , DayOfWeek varchar(50)
 , Month varchar(50)
 , Quarter int
