@@ -11,7 +11,7 @@ CREATE TABLE dw_transactional.Product
 CREATE TABLE dw_transactional.ProductOrder
 (
   ID DOUBLE
-, Date DATETIME
+, Date DATE
 , Description TINYTEXT
 , Quantity DOUBLE
 , CostPerItem DOUBLE
@@ -24,7 +24,7 @@ CREATE TABLE dw_transactional.ProductPriceList
   ID DOUBLE
 , Description TINYTEXT
 , UnitPrice DOUBLE
-, ValidUntilDate DATETIME
+, ValidUntilDate DATE
 , primary key(ID, ValidUntilDate)
 , foreign key(ID)references dw_transactional.Product(ID)
 )
@@ -63,10 +63,9 @@ CREATE TABLE dw_transactional.Sale
   SaleID VARCHAR(100) 
 , Cust_Key VARCHAR(100) 
 , StoreID DOUBLE
-, Date DATETIME
+, Date DATE
 , primary key (SaleID,Cust_Key)
 , foreign key(StoreID) references dw_transactional.Store(StoreID)
-, foreign key(Cust_Key) references dw_transactional.Customer_Code_Unique(CustCode) 
 )
 ;
 
@@ -88,7 +87,7 @@ CREATE TABLE dw_transactional.SaleItem
 CREATE TABLE dw_transactional.Time
 (
   Date_Key DOUBLE primary key
-, Date TINYTEXT
+, Date DATE
 , DayOfWeek TINYTEXT
 , Month TINYTEXT
 , Quarter TINYTEXT
