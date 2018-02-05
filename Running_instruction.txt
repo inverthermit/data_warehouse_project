@@ -1,0 +1,8 @@
+
+
+The whole ETL process is embedded in the DW_JOB.kjb file, which is a job file.
+
+It can fully support the process from reading file to loading everything into the data warehouse. 
+
+A few things are needed to be set up before running the job. They are mainly about building the Python environment, configuring the database, and configuring the data file path and the transformation file directory.
+
