@@ -1,0 +1,46 @@
+
+
+The whole ETL process is embedded in the DW_JOB.kjb file, which is a job file.
+
+It can fully support the process from reading file to loading everything into the data warehouse.
+
+A few things are needed to be set up before running the job. They are mainly about building the Python environment, configuring the database, and configuring the data file path and the transformation file directory.
+
+Steps:
+
+1. Install Python environment:
+(1) install Python 3 https://www.python.org/downloads/
+(2) install Python libraries:
+pip install mysql-connector-python
+pip install Flask-SQLAlchemy
+pip install mysqlclient
+pip install Pandas
+
+2. Change Python Configuration
+(1) copy config.example.json as config.json
+(2) config the attributes for MySQL connections:
+    "mysql_host": "127.0.0.1",
+    "username": "root",
+    "password": "root"
+
+3. Edit the database connections and change source file directory in Pentaho
+(1) Create a database connection in the "create_staging_schema(SQL)" task in DW_JOB.kjb file.
+And add this same connection to other tasks: "create_transactinal_schema(SQL)",
+"transformation_staging_to transactional_db(SQL)","create_data_warehouse_schema(SQL)",
+"transformation_transactionalDB_to_DataWarehouse2(SQL)".
+(2) Link the files in the Pentaho transformation1,2 and 3 to fileload.ktr, customer.ktr, sale.ktr based on the file names.
+(3) Link the Python task to the Python file.
+e.g. insert script
+python "D:\pentaho_python\Second_ETL.py"
+into the Pentaho task whose name is "Sencond_ETL.py".
+
+4. Now you can run the job!
+The whole process may take a long time(almost from 150 minutes, depends on computing power.
+And it might cause mysql connection lost, but mysql server will eventually complete everything in 2.5 hours).
+The most time consuming task is to insert everything into the final fact table, which takes 2 hours
+(mysql server needs to check all the foreign key constrains and build index for more than 22000 records).
+
+A demo is uploaded to Youtube recording the whole steps of running the job.
+
+If it does not work properly(maybe because of the config and environment),
+please contact Jun (jluo6@student.unimebl.edu.au) and I am happy to do demonstrate in person.

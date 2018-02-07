@@ -8,7 +8,6 @@ from sqlalchemy import create_engine
 import pandas as pd
 
 from Util import Util
-import tables
 
 
 host = Util.getConfig('mysql_host')
@@ -41,7 +40,7 @@ for index, row in df[::-1].iterrows():
         # print(versionNum)
     else:
         versionNum = 1
-    # row['Version'] = versionNum
+    # row['Version']   = versionNum
     df.iloc[index, versionColumnNum] = versionNum
     lastRowCustomerId = cid
 
