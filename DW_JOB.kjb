@@ -11,6 +11,33 @@
   <modified_date>2018&#x2f;02&#x2f;03 09&#x3a;18&#x3a;15.271</modified_date>
     <parameters>
     </parameters>
+  <connection>
+    <name>dw_job_connection</name>
+    <server>127.0.0.1</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>dw</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce10cc9da0ce</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>EXTRA_OPTION_MYSQL.defaultFetchSize</code><attribute>500</attribute></attribute>
+      <attribute><code>EXTRA_OPTION_MYSQL.useCursorFetch</code><attribute>true</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>3306</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>Y</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>STREAM_RESULTS</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
     <slaveservers>
     </slaveservers>
       <job-log-table>
@@ -287,29 +314,6 @@
    <shared_objects_file/>
   <entries>
     <entry>
-      <name>test.py</name>
-      <description/>
-      <type>SHELL</type>
-      <filename>C&#x3a;&#x5c;Users&#x5c;l1111&#x5c;Desktop&#x5c;data warehouse&#x5c;assignment&#x5c;code&#x5c;data_warehouse_project&#x5c;test.py</filename>
-      <work_directory/>
-      <arg_from_previous>N</arg_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <set_append_logfile>N</set_append_logfile>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <insertScript>N</insertScript>
-      <script>.&#x2f;C&#x3a;&#x5c;Users&#x5c;l1111&#x5c;Desktop&#x5c;data warehouse&#x5c;assignment&#x5c;code&#x5c;data_warehouse_project&#x5c;test.py</script>
-      <loglevel>Basic</loglevel>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>208</xloc>
-      <yloc>240</yloc>
-    </entry>
-    <entry>
       <name>DUMMY</name>
       <description/>
       <type>SPECIAL</type>
@@ -326,8 +330,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>336</xloc>
-      <yloc>256</yloc>
+      <xloc>1008</xloc>
+      <yloc>464</yloc>
     </entry>
     <entry>
       <name>START</name>
@@ -347,12 +351,238 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>112</xloc>
-      <yloc>240</yloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>create_data_warehouse_schema&#x28;SQL&#x29;</name>
+      <description/>
+      <type>SQL</type>
+      <sql>create database if not exists dw_final_data_warehouse&#x3b;&#xd;&#xa;&#xd;&#xa;create table dw_final_data_warehouse.Product_Dimension&#x28;Product_Id int primary key,Description TINYTEXT,&#xd;&#xa;Product_Group  varchar&#x28;50&#x29;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;create table dw_final_data_warehouse.Store_Dimension&#x28;Store_Id int primary key,Location varchar&#x28;50&#x29;,Postcode varchar&#x28;20&#x29;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;create table dw_final_data_warehouse.Customer_Dimension&#x28;Customer_Id varchar&#x28;50&#x29;, Version int, Version_Date date, Cutomer_Name varchar&#x28;50&#x29;,&#xd;&#xa;Date_Of_Birth date,Postcode int,primary key&#x28;Customer_Id,Version&#x29;,&#xd;&#xa;index index_Customer_Postcode &#x28;Postcode&#x29;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_final_data_warehouse.Time_Dimension&#xd;&#xa;&#x28;&#xd;&#xa;  Time_Id int primary key&#xd;&#xa;, Date DATE&#xd;&#xa;, DayOfWeek varchar&#x28;50&#x29;&#xd;&#xa;, Month varchar&#x28;50&#x29;&#xd;&#xa;, Quarter int&#xd;&#xa;, Year int&#xd;&#xa;, Day int&#xd;&#xa;, Season varchar&#x28;50&#x29;&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;create table dw_final_data_warehouse.Sale_Fact&#x28;Sale_Id int NOT NULL AUTO_INCREMENT, Time_Id int, Customer_Id varchar&#x28;50&#x29;, Version int,Store_Id int,&#xd;&#xa;Product_Id int,Total_Cost double&#xd;&#xa;,Unit_Sales double,Dollar_Sales double,Margin double,&#xd;&#xa;primary key&#x28;Sale_Id, Time_Id , Customer_Id , Version ,Store_Id , Product_Id &#x29;,&#xd;&#xa;foreign key&#x28;Time_Id&#x29; references dw_final_data_warehouse.Time_Dimension&#x28;Time_Id&#x29;,&#xd;&#xa;foreign key &#x28;Customer_Id,Version&#x29; references dw_final_data_warehouse.Customer_Dimension&#x28;Customer_Id,Version&#x29;,&#xd;&#xa;foreign key&#x28;Store_Id&#x29; references dw_final_data_warehouse.Store_Dimension&#x28;Store_Id&#x29;,&#xd;&#xa;foreign key&#x28;Product_Id&#x29; references dw_final_data_warehouse.Product_Dimension&#x28;Product_Id&#x29;&#x29;&#x3b;&#xd;&#xa;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>dw_job_connection</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>272</xloc>
+      <yloc>320</yloc>
+    </entry>
+    <entry>
+      <name>Transformation 3</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;sale.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>816</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>Transformation 2</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;customer.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>640</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>transformation_staging_to transactional_db&#x28;SQL&#x29;</name>
+      <description/>
+      <type>SQL</type>
+      <sql>insert into dw_transactional.Customer_Code_Unique&#xd;&#xa;select distinct CustCode from &#x28; &#xd;&#xa; select replace &#x28; cidnowill,&#x27;SthMelb&#x27;,&#x27; &#x27;&#x29; as CustCode,Name,Postcode,&#x60;Date of Birth&#x60; ,Validuntil from&#xd;&#xa;&#x28;&#x28;select &#x2a;,replace&#x28; cidnocarl,&#x27;Will&#x27;,&#x27; &#x27;&#x29; as cidnowill from&#xd;&#xa; &#xd;&#xa; &#x28;&#x28;select &#x2a; , replace&#x28;CustCode,&#x27;Carl&#x27; ,&#x27; &#x27;&#x29; as cidnocarl from &#xd;&#xa; &#xd;&#xa; dw_staging.customer&#x29; as C&#x29;&#x29; as W&#x29;&#x29; as newcustomer &#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_transactional.customer&#xd;&#xa;select distinct &#x2a; from &#x28; &#xd;&#xa; select replace &#x28; cidnowill,&#x27;SthMelb&#x27;,&#x27; &#x27;&#x29; as CustCode,Name,Postcode,&#x60;Date of Birth&#x60; ,Validuntil from&#xd;&#xa;&#x28;&#x28;select &#x2a;,replace&#x28; cidnocarl,&#x27;Will&#x27;,&#x27; &#x27;&#x29; as cidnowill from&#xd;&#xa; &#xd;&#xa; &#x28;&#x28;select &#x2a; , replace&#x28;CustCode,&#x27;Carl&#x27; ,&#x27; &#x27;&#x29; as cidnocarl from &#xd;&#xa; &#xd;&#xa; dw_staging.customer&#x29; as C&#x29;&#x29; as W&#x29;&#x29; as newcustomer &#x3b;&#xd;&#xa; &#xd;&#xa;&#xd;&#xa;insert into dw_transactional.product&#xd;&#xa;select  distinct &#x2a; from dw_staging.product &#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_transactional.store&#xd;&#xa;select  distinct &#x2a; from dw_staging.store &#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_transactional.productorder&#xd;&#xa;select  distinct &#x2a; from dw_staging.productorder &#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_transactional.productpricelist&#xd;&#xa;select  distinct &#x2a; from dw_staging.productpricelist &#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_transactional.sale&#xd;&#xa;select distinct &#x2a; from &#x28;select SaleID, replace &#x28; cidnowill,&#x27;SthMelb&#x27;,&#x27; &#x27;&#x29; as Cust_Key, StoreID,Date from&#xd;&#xa;&#xd;&#xa;&#x28;&#x28;select &#x2a;,replace&#x28; cidnocarl,&#x27;Will&#x27;,&#x27; &#x27;&#x29; as cidnowill from&#xd;&#xa; &#xd;&#xa; &#x28;&#x28;select &#x2a;, replace&#x28;Cust_Key,&#x27;Carl&#x27; ,&#x27; &#x27;&#x29; as cidnocarl from &#xd;&#xa; &#xd;&#xa; dw_staging.sale&#x29; as C&#x29;&#x29; as W&#x29;&#x29; as newsale&#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_transactional.saleitem&#xd;&#xa;select  distinct &#x2a; from dw_staging.saleitem &#x3b;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;insert into dw_transactional.time&#xd;&#xa;select  distinct &#x2a; from dw_staging.time &#x3b;&#xd;&#xa;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>dw_job_connection</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1008</xloc>
+      <yloc>320</yloc>
+    </entry>
+    <entry>
+      <name>create_staging_schema&#x28;SQL&#x29;</name>
+      <description/>
+      <type>SQL</type>
+      <sql>CREATE SCHEMA if not exists &#x60;dw_staging&#x60;&#x3b; &#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_staging.Product&#xd;&#xa;&#x28;&#xd;&#xa;  ID DOUBLE&#xd;&#xa;, Description TINYTEXT&#xd;&#xa;, &#x60;Group&#x60; TINYTEXT&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;CREATE TABLE dw_staging.ProductOrder&#xd;&#xa;&#x28;&#xd;&#xa;  ID DOUBLE&#xd;&#xa;, Date DATETIME&#xd;&#xa;, Description TINYTEXT&#xd;&#xa;, Quantity DOUBLE&#xd;&#xa;, CostPerItem DOUBLE&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_staging.ProductPriceList&#xd;&#xa;&#x28;&#xd;&#xa;  ID DOUBLE&#xd;&#xa;, Description TINYTEXT&#xd;&#xa;, UnitPrice DOUBLE&#xd;&#xa;, ValidUntilDate DATETIME&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_staging.Sale&#xd;&#xa;&#x28;&#xd;&#xa;  SaleID TINYTEXT&#xd;&#xa;, Cust_Key TINYTEXT&#xd;&#xa;, StoreID DOUBLE&#xd;&#xa;, Date DATETIME&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_staging.SaleItem&#xd;&#xa;&#x28;&#xd;&#xa;  SaleID TINYTEXT&#xd;&#xa;, LineID DOUBLE&#xd;&#xa;, ProductID DOUBLE&#xd;&#xa;, Units DOUBLE&#xd;&#xa;, UnitPrice DOUBLE&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_staging.Store&#xd;&#xa;&#x28;&#xd;&#xa;  StoreID DOUBLE&#xd;&#xa;, Description TINYTEXT&#xd;&#xa;, Postcode DOUBLE&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_staging.Customer&#xd;&#xa;&#x28;&#xd;&#xa;  CustCode VARCHAR&#x28;100&#x29;&#xd;&#xa;, Name VARCHAR&#x28;100&#x29;&#xd;&#xa;, Postcode DECIMAL&#x28;65&#x29;&#xd;&#xa;, &#x60;Date of Birth&#x60; TINYTEXT&#xd;&#xa;, Validuntil TINYTEXT&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_staging.Time&#xd;&#xa;&#x28;&#xd;&#xa;  Date_Key DOUBLE&#xd;&#xa;, Date TINYTEXT&#xd;&#xa;, DayOfWeek TINYTEXT&#xd;&#xa;, Month TINYTEXT&#xd;&#xa;, Quarter TINYTEXT&#xd;&#xa;, Year DOUBLE&#xd;&#xa;, Day DOUBLE&#xd;&#xa;, Season TINYTEXT&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename>C&#x3a;&#x5c;Users&#x5c;l1111&#x5c;Desktop&#x5c;data warehouse&#x5c;assignment&#x5c;code&#x5c;data_warehouse_project&#x5c;data&#x5c;dw_staging_tables.sql</sqlfilename>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>dw_job_connection</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>272</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>Transformation</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;fileload.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>448</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>create_transactinal_schema&#x28;SQL&#x29;</name>
+      <description/>
+      <type>SQL</type>
+      <sql>CREATE SCHEMA if not exists &#x60;dw_transactional&#x60;&#x3b; &#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_transactional.Product&#xd;&#xa;&#x28;&#xd;&#xa;  ID DOUBLE&#xd;&#xa;, Description TINYTEXT&#xd;&#xa;, &#x60;Group&#x60; TINYTEXT&#xd;&#xa;,primary key &#x28;ID&#x29;&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;CREATE TABLE dw_transactional.ProductOrder&#xd;&#xa;&#x28;&#xd;&#xa;  ID DOUBLE&#xd;&#xa;, Date DATE&#xd;&#xa;, Description TINYTEXT&#xd;&#xa;, Quantity DOUBLE&#xd;&#xa;, CostPerItem DOUBLE&#xd;&#xa;, foreign key&#x28;ID&#x29;references dw_transactional.Product&#x28;ID&#x29; &#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_transactional.ProductPriceList&#xd;&#xa;&#x28;&#xd;&#xa;  ID DOUBLE&#xd;&#xa;, Description TINYTEXT&#xd;&#xa;, UnitPrice DOUBLE&#xd;&#xa;, ValidUntilDate DATE&#xd;&#xa;, primary key&#x28;ID, ValidUntilDate&#x29;&#xd;&#xa;, foreign key&#x28;ID&#x29;references dw_transactional.Product&#x28;ID&#x29;&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_transactional.Customer_Code_Unique&#xd;&#xa;&#x28;&#xd;&#xa; CustCode VARCHAR&#x28;100&#x29; primary key &#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_transactional.Customer&#xd;&#xa;&#x28;&#xd;&#xa; CustCode VARCHAR&#x28;100&#x29;&#xd;&#xa;, Name VARCHAR&#x28;100&#x29;&#xd;&#xa;, Postcode DECIMAL&#x28;65&#x29;&#xd;&#xa;, &#x60;Date of Birth&#x60; VARCHAR&#x28;100&#x29;&#xd;&#xa;, Validuntil VARCHAR&#x28;100&#x29;&#xd;&#xa;, foreign key&#x28;CustCode&#x29; references dw_transactional.Customer_Code_Unique&#x28;CustCode&#x29;&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_transactional.Store&#xd;&#xa;&#x28;&#xd;&#xa;  StoreID DOUBLE primary key&#xd;&#xa;, Description TINYTEXT&#xd;&#xa;, Postcode DOUBLE&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_transactional.Sale&#xd;&#xa;&#x28;&#xd;&#xa;  SaleID VARCHAR&#x28;100&#x29; &#xd;&#xa;, Cust_Key VARCHAR&#x28;100&#x29; &#xd;&#xa;, StoreID DOUBLE&#xd;&#xa;, Date DATE&#xd;&#xa;, primary key &#x28;SaleID,Cust_Key&#x29;&#xd;&#xa;, foreign key&#x28;StoreID&#x29; references dw_transactional.Store&#x28;StoreID&#x29;&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_transactional.SaleItem&#xd;&#xa;&#x28;&#xd;&#xa;  SaleID VARCHAR&#x28;100&#x29;&#xd;&#xa;, LineID DOUBLE&#xd;&#xa;, ProductID DOUBLE&#xd;&#xa;, Units DOUBLE&#xd;&#xa;, UnitPrice DOUBLE&#xd;&#xa;, primary key &#x28;SaleID, LineID&#x29;&#xd;&#xa;, foreign key&#x28;SaleID&#x29; references dw_transactional.Sale&#x28;SaleID&#x29;&#xd;&#xa;, foreign key&#x28;ProductID&#x29; references dw_transactional.Product&#x28;ID&#x29;&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;CREATE TABLE dw_transactional.Time&#xd;&#xa;&#x28;&#xd;&#xa;  Date_Key DOUBLE primary key&#xd;&#xa;, Date DATE&#xd;&#xa;, DayOfWeek TINYTEXT&#xd;&#xa;, Month TINYTEXT&#xd;&#xa;, Quarter TINYTEXT&#xd;&#xa;, Year DOUBLE&#xd;&#xa;, Day DOUBLE&#xd;&#xa;, Season TINYTEXT&#xd;&#xa;&#x29;&#xd;&#xa;&#x3b;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>dw_job_connection</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1008</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>transformation_transactionalDB_to_DataWarehouse2&#x28;SQL&#x29;</name>
+      <description/>
+      <type>SQL</type>
+      <sql>insert into dw_final_data_warehouse.Time_Dimension&#xd;&#xa;select  distinct &#x2a; from dw_transactional.time &#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_final_data_warehouse.Store_Dimension&#xd;&#xa;select  distinct &#x2a; from dw_transactional.store &#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_final_data_warehouse.Product_Dimension&#xd;&#xa;select  distinct &#x2a; from dw_transactional.product &#x3b;&#xd;&#xa;&#xd;&#xa;create temporary table dw_final_data_warehouse.New_SaleDate&#xd;&#xa;as &#x28;&#xd;&#xa;select &#x2a;,&#xd;&#xa;   &#x28;select  CostPerItem&#xd;&#xa;    from dw_transactional.ProductOrder where ProductOrder.Date &#x3c;&#x3d; New_SaleDate.Date and ProductOrder.ID &#x3d; New_SaleDate.ProductID&#xd;&#xa;    order by  ProductOrder.Date desc  limit 1&#x29; as CostPerItem, &#x28;UnitPrice&#x2a;Units&#x29; as dollar_sales&#xd;&#xa;from &#xd;&#xa;	&#x28;&#xd;&#xa;	select saledate.SaleID,Date,S.ProductID, S.Units, S.UnitPrice, Cust_Key, StoreID&#xd;&#xa;	from dw_transactional.Sale as saledate inner join &#x28;select &#x2a; from  dw_transactional.SaleItem&#x29; as S&#xd;&#xa;	where saledate.SaleID &#x3d; S.SaleID&#xd;&#xa;	&#x29; as New_SaleDate&#xd;&#xa;    &#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;create temporary table dw_final_data_warehouse.temp_all_except_version as&#x28;&#xd;&#xa;select Customer_id, StoreID, ProductID, unit_sales, total_cost, dollar_sales, margin, Date_Key, fact_except_for_time.Date as Date&#xd;&#xa;from&#xd;&#xa;&#x28;&#xd;&#xa;select Cust_Key as Customer_id, StoreID, ProductID, Units as unit_sales, total_cost, dollar_sales&#xd;&#xa;, &#x28;dollar_sales&#x2a;100-total_cost&#x2a;100&#x29;&#x2f;100 as margin , Date&#xd;&#xa;from&#x28;&#xd;&#xa;select &#x2a;, &#x28;Units&#x2a;&#x28;CostPerItem&#x2a;100&#x29;&#x29;&#x2f;100 as total_cost&#xd;&#xa;from dw_final_data_warehouse.New_SaleDate&#x29; as temp3&#x29;as fact_except_for_time, dw_transactional.time&#xd;&#xa;where fact_except_for_time.Date &#x3d; dw_transactional.time.Date&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;&#xd;&#xa;create temporary table dw_final_data_warehouse.unique_customerid_Date_customer_version_date as&#x28;&#xd;&#xa;select t.Customer_id, Date,min&#x28;new_version_date&#x29; as customer_version_date&#xd;&#xa;from&#xd;&#xa;&#x28;select distinct customer_id,Date from dw_final_data_warehouse.temp_all_except_version&#x29; as t,&#xd;&#xa;&#x28;SELECT Customer_Id,CASE WHEN version_date IS NULL THEN CURDATE&#x28;&#x29; ELSE version_date END as new_version_date&#xd;&#xa;			FROM dw_final_data_warehouse.customer_dimension&#x29; as table2&#xd;&#xa;&#xd;&#xa;where t.Customer_id&#x3d; table2.Customer_id and t.Date &#x3c;&#x3d; table2.new_version_date&#xd;&#xa;group by t.Customer_id, Date&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;create temporary table dw_final_data_warehouse.unique_customerid_Date_version as&#x28;&#xd;&#xa;select table1.Customer_id, Date, Version from dw_final_data_warehouse.unique_customerid_Date_customer_version_date as table1,&#xd;&#xa;			&#x28;SELECT Customer_Id,version,CASE WHEN version_date IS NULL THEN CURDATE&#x28;&#x29; ELSE version_date END as new_version_date&#xd;&#xa;			FROM dw_final_data_warehouse.customer_dimension&#x29; as table2&#xd;&#xa;where table1.customer_id &#x3d;  table2.Customer_Id&#xd;&#xa;and table1.customer_version_date &#x3d; table2.new_version_date&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;insert into dw_final_data_warehouse.sale_fact &#x28;Time_Id, Customer_Id, Version,Store_Id, Product_Id,Total_Cost, Unit_Sales,Dollar_Sales,Margin&#x29;&#xd;&#xa;select Date_Key as Time_Id, t1.Customer_id, Version,&#xd;&#xa;    StoreID, ProductID,  total_cost, unit_sales, dollar_sales, margin&#xd;&#xa;from dw_final_data_warehouse.temp_all_except_version as t1, dw_final_data_warehouse.unique_customerid_Date_version as t2&#xd;&#xa;where t1.Customer_id &#x3d; t2.Customer_id and t1.Date &#x3d; t2.Date&#x3b;&#xd;&#xa;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>dw_job_connection</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>720</xloc>
+      <yloc>464</yloc>
+    </entry>
+    <entry>
+      <name>Second_ETL.py 2</name>
+      <description/>
+      <type>SHELL</type>
+      <filename/>
+      <work_directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <set_append_logfile>N</set_append_logfile>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <insertScript>Y</insertScript>
+      <script>python &#x22;D&#x3a;&#x5c;pentaho_python&#x5c;Second_ETL.py&#x22;</script>
+      <loglevel>Basic</loglevel>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>272</xloc>
+      <yloc>464</yloc>
     </entry>
   </entries>
   <hops>
     <hop>
-      <from>test.py</from>
+      <from>START</from>
+      <to>create_staging_schema&#x28;SQL&#x29;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>create_transactinal_schema&#x28;SQL&#x29;</from>
+      <to>transformation_staging_to transactional_db&#x28;SQL&#x29;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>transformation_transactionalDB_to_DataWarehouse2&#x28;SQL&#x29;</from>
       <to>DUMMY</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -361,15 +591,90 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>START</from>
-      <to>test.py</to>
+      <from>transformation_staging_to transactional_db&#x28;SQL&#x29;</from>
+      <to>create_data_warehouse_schema&#x28;SQL&#x29;</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Transformation 3</from>
+      <to>create_transactinal_schema&#x28;SQL&#x29;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Transformation 2</from>
+      <to>Transformation 3</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Transformation</from>
+      <to>Transformation 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>create_staging_schema&#x28;SQL&#x29;</from>
+      <to>Transformation</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>create_data_warehouse_schema&#x28;SQL&#x29;</from>
+      <to>Second_ETL.py 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Second_ETL.py 2</from>
+      <to>transformation_transactionalDB_to_DataWarehouse2&#x28;SQL&#x29;</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
+    <notepad>
+      <note>Transformation 1,2,3&#x3a; loading from files</note>
+      <xloc>544</xloc>
+      <yloc>176</yloc>
+      <width>270</width>
+      <heigth>30</heigth>
+      <fontname>Segoe UI</fontname>
+      <fontsize>9</fontsize>
+      <fontbold>N</fontbold>
+      <fontitalic>N</fontitalic>
+      <fontcolorred>0</fontcolorred>
+      <fontcolorgreen>0</fontcolorgreen>
+      <fontcolorblue>0</fontcolorblue>
+      <backgroundcolorred>255</backgroundcolorred>
+      <backgroundcolorgreen>205</backgroundcolorgreen>
+      <backgroundcolorblue>112</backgroundcolorblue>
+      <bordercolorred>100</bordercolorred>
+      <bordercolorgreen>100</bordercolorgreen>
+      <bordercolorblue>100</bordercolorblue>
+      <drawshadow>Y</drawshadow>
+    </notepad>
   </notepads>
 </job>

@@ -1,9 +1,9 @@
 {
-    "mysql_host": "127.0.0.1:3306",
+    "mysql_host": "127.0.0.1",
     "username": "root",
     "password": "root",
     "staging_schema": "dw_staging",
-    "data_warehouse_schema": "dw_final",
+    "transactional_schema": "dw_transactional",
+    "data_warehouse_schema": "dw_final_data_warehouse",
     "test_schema": "dw_workshop5"
-
 }
